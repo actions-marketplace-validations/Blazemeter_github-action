@@ -55,10 +55,36 @@ This action allows you to run Blazemeter existing test and create a new test.
 - Used when send microsoft teams notification for blazemeter test status
 ### `enablePublicReportURL`
 - Used when send public report url through a microsoft teams notification
+### `locations`
+- Comma separated location IDs as String. Ex., "asia-east1-a,australia-southeast1-a". All supported locationIDs can be found at https://api.blazemeter.com/performance/#list-of-google-cloud-locations
+- For Private locations(OPLs), use ID as "harbor-661f7af50d8f6f8f0d014359". Just append the 'harbor-' prefix to the ID of the OPL.
+### `dedicatedIP`
+- A boolean value defaulted to **false**. When set to **true**, dedicatedIPs will be used if available.
+
+### `disableLoadConfig`
+
+- Select this to disable load configuration for existing JMeter based test. Load configuration will be taken from the Script.
+
+### `steps`
+
+- You can configure your test to ramp up in steps. This is the number of steps to reach the total users. Default is disabled(empty field). To enable it, use any number greater than 0. Once enabled, use 0 to disable it.
+
+### `throughput`
+
+- You can limit the number of requests per second (RPS) for your test. Default is disabled(empty field). To enable it, use any number greater than 1. Once enabled, use 0 to disable it.
+
+### `concurrencyControlEnabled`
+
+- Select this to allow users to change no. of users at runtime. Default is false(empty field). Keep it selected to enable this option.
+
+### `iterationsEnabled`
+
+- Select this to use iterations instead of duration. If selected, iteration will be used not duration. If not selected, duration will be used.
+
 ## Example
 **1. Run Existing Test**
 ```
-uses: BlazeRunner-BZR/Github-Action@v8.1
+uses: Blazemeter/github-action@v8.4
 with:
    apiKey: ""
    apiSecret: ""
@@ -66,7 +92,7 @@ with:
 ```
 **2. Create New Test**
 ```
-uses: BlazeRunner-BZR/Github-Action@v8.1
+uses: Blazemeter/github-action@v8.4
 with:
    apiKey: ""
    apiSecret: ""
@@ -77,7 +103,7 @@ with:
  ```
 **3. Send microsoft teams notification**
 ```
-uses: BlazeRunner-BZR/Github-Action@v8.1
+uses: Blazemeter/github-action@v8.4
 with:
    apiKey: ""
    apiSecret: ""
@@ -85,3 +111,75 @@ with:
    webhookURL : ""
    continuePipeline: "false"
  ```
+**4. Run Existing Test with load Parameter**
+
+```
+uses: BlazeRunner-BZR/Github-Action@v8
+with:
+   apiKey: 'xxx'
+   apiSecret: 'xxx'
+   testID: 'xxx'
+   totalUsers: "31"
+   duration: "7"
+   rampUp: "2"
+   steps: "2"
+   throughput: "4"
+   concurrencyControlEnabled: "true"
+```
+
+**5. Run Existing Test with disabled load Parameter(For JMETER test only)**
+
+```
+uses: BlazeRunner-BZR/Github-Action@v8
+with:
+   apiKey: 'xxx'
+   apiSecret: 'xxx'
+   testID: 'xxx'
+   totalUsers: "31"
+   disableLoadConfig: "true"
+```
+
+**6. Run Existing Test with iterations instead of duration**
+
+```
+uses: BlazeRunner-BZR/Github-Action@v8
+with:
+   apiKey: 'xxx'
+   apiSecret: 'xxx'
+   testID: 'xxx'
+   iterationsEnabled: "true"
+   iterations: "10"
+```
+
+**7. Create New Test with load parameters**
+
+```
+uses: BlazeRunner-BZR/Github-Action@v8
+with:
+   apiKey: 'xxx'
+   apiSecret: 'xxx'
+   createTest: 'xxx'
+   inputStartFile: 'xxx'
+   testName: 'xxx'
+   projectID: 'xxxx'
+   totalUsers: "31"
+   duration: "7"
+   rampUp: "2"
+   steps: "2"
+   throughput: "4"
+   concurrencyControlEnabled: "true"
+```
+
+**8. Create New Test with disable load parameters**
+
+```
+uses: BlazeRunner-BZR/Github-Action@v8
+with:
+   apiKey: 'xxx'
+   apiSecret: 'xxx'
+   createTest: 'xxx'
+   inputStartFile: 'xxx'
+   testName: 'xxx'
+   projectID: 'xxxx'
+   disableLoadConfig: "true"
+```
